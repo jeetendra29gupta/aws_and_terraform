@@ -1,0 +1,28 @@
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+# Configure AWS CLI
+aws --version
+aws configure
+
+AWS Access Key ID [None]: <Access Key ID>
+AWS Secret Access Key [None]: <Secret Access Key>
+Default region name [None]: ap-south-1
+Default output format [None]: json
+
+# List All Instances in your AWS infrastructure from Default Region
+aws ec2 describe-instances
+
+# List All Instances in your AWS infrastructure from Mumbai Region
+aws ec2 describe-instances --region ap-south-1 --output table
+
+# "InstanceId": "i-07f9a529614502f7c"
+aws ec2 stop-instances --instance-ids i-07f9a529614502f7c
+aws ec2 start-instances --instance-ids i-07f9a529614502f7c
+aws ec2 create-tags --resources i-07f9a529614502f7c --tags Key=Department,Value=JuJu
+
+# Launch a New EC2 Instance
+aws ec2 run-instances --image-id ami-052cef05d01020f1d --count 1 --instance-type t2.micro --key-name JuJu --security-group-ids launch-wizard-1  
+
+aws ec2 terminate-instances --instance-ids i-0811120d3b5240e30
