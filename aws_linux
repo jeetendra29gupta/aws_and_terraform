@@ -1,0 +1,12 @@
+aws ec2 create-security-group --group-name port_juju --description "security group to open port 22/80/8080/3306"
+
+aws ec2 authorize-security-group-ingress --group-name port_juju --protocol tcp --port 22 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name port_juju --protocol tcp --port 80 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name port_juju --protocol tcp --port 8080 --cidr 0.0.0.0/0
+aws ec2 authorize-security-group-ingress --group-name port_juju --protocol tcp --port 3306 --cidr 0.0.0.0/0
+
+aws ec2 describe-security-groups --group-names port_juju
+
+aws ec2 create-key-pair --region ap-south-1 --key-name juju --query "KeyMaterial" --output text
+
+aws ec2 run-instances --image-id ami-052cef05d01020f1d --count 1 --instance-type t2.micro --key-name juju --security-group-ids port_juju  
